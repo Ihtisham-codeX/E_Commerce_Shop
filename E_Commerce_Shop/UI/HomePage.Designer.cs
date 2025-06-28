@@ -88,6 +88,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "HomePage";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "HomePage";
             Load += HomePage_Load;
             panel2.ResumeLayout(false);

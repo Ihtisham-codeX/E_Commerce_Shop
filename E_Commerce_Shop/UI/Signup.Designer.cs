@@ -59,6 +59,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(395, 32);
             textBox1.TabIndex = 5;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
@@ -81,6 +82,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(395, 32);
             textBox2.TabIndex = 7;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label3
             // 
@@ -102,6 +104,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(395, 32);
             textBox3.TabIndex = 9;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // label4
             // 
@@ -119,10 +122,12 @@
             // 
             comboBox1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Merchant", "Customer" });
             comboBox1.Location = new Point(188, 436);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(395, 36);
             comboBox1.TabIndex = 11;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // button3
             // 
@@ -134,6 +139,7 @@
             button3.TabIndex = 12;
             button3.Text = "Signup";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // Signup
             // 
@@ -151,7 +157,6 @@
             Controls.Add(label2);
             Name = "Signup";
             Text = "Signup";
-            WindowState = FormWindowState.Normal;
             Load += Signup_Load;
             Controls.SetChildIndex(label2, 0);
             Controls.SetChildIndex(textBox1, 0);

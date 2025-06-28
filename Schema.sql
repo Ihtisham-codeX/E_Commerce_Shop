@@ -23,7 +23,7 @@ Create Table Shops(
 	ShopID INT auto_increment primary key,
     ShopName VARCHAR(50) NOT NULL UNIQUE,
     MerchantID INT NOT NULL,
-    ShopType VARCHAR(50) NOT NULL UNIQUE,
+    ShopType VARCHAR(50) NOT NULL ,
      FOREIGN KEY (MerchantID) REFERENCES Users(UserID)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
