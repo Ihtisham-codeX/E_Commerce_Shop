@@ -25,6 +25,9 @@ D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commer
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.AddProducts.resources
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Merchant.BestSelling.resources
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Merchant.CreateShop.resources
+D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Customer.Customerdashboard.resources
+D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Customer.ViewCart.resources
+D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Customer.ViewProduct.resources
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.HomePage.resources
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.Login.resources
 D:\My Projects\E_Commerce_Shop\E_Commerce_Shop\obj\Debug\net8.0-windows\E_Commerce_Shop.UI.MerchantDashboard.resources

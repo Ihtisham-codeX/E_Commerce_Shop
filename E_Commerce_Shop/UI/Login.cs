@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using E_Commerce_Shop.BL;
 using E_Commerce_Shop.DL;
+using E_Commerce_Shop.UI.Customer;
 
 
 namespace E_Commerce_Shop.UI
@@ -39,12 +40,12 @@ namespace E_Commerce_Shop.UI
                     MerchantDashboard merchantDashboard = new MerchantDashboard(loggedInUser);
                     merchantDashboard.Show();
                 }
-                //else if (loggedInUser.GetUserRole() == "Customer")
-                //{
-                //    this.Hide();
-                //    CustomerDashboard customerDashboard = new CustomerDashboard();
-                //    customerDashboard.Show();
-                //}
+                else if (loggedInUser.GetUserRole() == "Customer")
+                {
+                    this.Hide();
+                    Customerdashboard customerDashboard = new Customerdashboard(loggedInUser);
+                    customerDashboard.Show();
+                }
             }
             else
             {

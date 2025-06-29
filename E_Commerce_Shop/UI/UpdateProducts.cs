@@ -88,7 +88,8 @@ namespace E_Commerce_Shop.UI.Merchant
 
                 
             // Load Data
-            string query = "SELECT ProductID, Name, ImagePath, Price, Quantity FROM Products";
+            int id = User.GetUserId(user.GetPassword(), user.GetUsername());
+            string query = @$"SELECT ProductID, Name, ImagePath, Price, Quantity FROM Products Where MerchantID = '{id}'";
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
