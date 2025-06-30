@@ -158,6 +158,18 @@ namespace E_Commerce_Shop.UI.Customer
             }
         }
 
-
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView4.Rows.Count > 0)
+            {
+                ConfirmPurchase confirmPurchase = new ConfirmPurchase(user);
+                confirmPurchase.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Your cart is empty. Please add items to your cart before proceeding to checkout.", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

@@ -59,5 +59,12 @@ namespace E_Commerce_Shop.UI.Customer
             ViewCart viewCart = new ViewCart(user);
             viewCart.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            HomePage homePage = new HomePage();
+            homePage.Show();
+        }
     }
 }
