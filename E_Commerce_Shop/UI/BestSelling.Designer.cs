@@ -40,6 +40,7 @@
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(1079, 619);
             dataGridView1.TabIndex = 2;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // BestSelling
             // 
@@ -48,7 +49,6 @@
             ClientSize = new Size(1289, 793);
             Controls.Add(dataGridView1);
             Name = "BestSelling";
-            StartPosition = FormStartPosition.CenterScreen;
             Text = "BestSelling";
             Load += BestSelling_Load;
             Controls.SetChildIndex(dataGridView1, 0);
