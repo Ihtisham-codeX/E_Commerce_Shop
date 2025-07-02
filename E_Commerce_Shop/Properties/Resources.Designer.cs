@@ -89,5 +89,25 @@ namespace E_Commerce_Shop.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2025_07_02_062522 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2025-07-02 062522", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_2025_07_02_063100 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot 2025-07-02 063100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

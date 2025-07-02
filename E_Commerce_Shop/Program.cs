@@ -1,4 +1,5 @@
 using E_Commerce_Shop.UI;
+using E_Commerce_Shop.UI.Admin;
 using E_Commerce_Shop.UI.Customer;
 
 namespace E_Commerce_Shop
@@ -14,7 +15,7 @@ namespace E_Commerce_Shop
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new HomePage());
+            Application.Run(new AdminDasboard());
         }
     }
 }
