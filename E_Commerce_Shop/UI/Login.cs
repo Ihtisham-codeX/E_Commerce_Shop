@@ -46,6 +46,16 @@ namespace E_Commerce_Shop.UI
                     Customerdashboard customerDashboard = new Customerdashboard(loggedInUser);
                     customerDashboard.Show();
                 }
+                else if(loggedInUser.GetUserRole() == "Admin")
+                {
+                    this.Hide();
+                    Admin.AdminDasshboard adminDashboard = new Admin.AdminDasshboard();
+                    adminDashboard.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Unknown user role. Please contact support.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
