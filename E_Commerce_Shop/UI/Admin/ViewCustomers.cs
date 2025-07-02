@@ -43,17 +43,17 @@ namespace E_Commerce_Shop.UI.Admin
             dataGridView2.Columns.Add("TotalSpent", "Total Spent");
 
             string query = @"
-       SELECT 
-    u.Username AS CustomerName,
-    u.Email,
-    COUNT(DISTINCT o.OrderID) AS SalesMade,
-    COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalSpent
-FROM Users u
-LEFT JOIN Orders o ON u.UserID = o.CustomerID
-LEFT JOIN OrderItems oi ON o.OrderID = oi.OrderID
-WHERE u.Role = 'Customer'
-GROUP BY u.UserID, u.Username, u.Email
-ORDER BY TotalSpent DESC;
+                SELECT 
+                u.Username AS CustomerName,
+                u.Email,
+                COUNT(DISTINCT o.OrderID) AS SalesMade,
+                COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalSpent
+                FROM Users u
+                LEFT JOIN Orders o ON u.UserID = o.CustomerID
+                LEFT JOIN OrderItems oi ON o.OrderID = oi.OrderID
+                WHERE u.Role = 'Customer'
+                GROUP BY u.UserID, u.Username, u.Email
+                ORDER BY TotalSpent DESC;
 ";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())

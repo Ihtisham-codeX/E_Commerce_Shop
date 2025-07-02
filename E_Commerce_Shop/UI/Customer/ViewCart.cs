@@ -61,13 +61,13 @@ namespace E_Commerce_Shop.UI.Customer
             dataGridView4.Columns.Add(removeCol);
 
             string query = @"
-        SELECT p.ProductID, p.Name AS ProductName, p.ImagePath, s.ShopName, p.Price, SUM(ci.Quantity) AS Quantity
-        FROM CartItems ci
-        JOIN Carts c ON ci.CartID = c.CartID
-        JOIN Products p ON ci.ProductID = p.ProductID
-        JOIN Shops s ON p.MerchantID = s.MerchantID
-        WHERE c.CustomerID = @id
-        GROUP BY p.ProductID, p.Name, p.ImagePath, s.ShopName, p.Price";
+                SELECT p.ProductID, p.Name AS ProductName, p.ImagePath, s.ShopName, p.Price, SUM(ci.Quantity) AS Quantity
+                FROM CartItems ci
+                JOIN Carts c ON ci.CartID = c.CartID
+                JOIN Products p ON ci.ProductID = p.ProductID
+                JOIN Shops s ON p.MerchantID = s.MerchantID
+                WHERE c.CustomerID = @id
+                GROUP BY p.ProductID, p.Name, p.ImagePath, s.ShopName, p.Price";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {

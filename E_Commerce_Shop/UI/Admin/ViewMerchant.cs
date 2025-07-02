@@ -45,22 +45,21 @@ namespace E_Commerce_Shop.UI.Admin
             dataGridView2.Columns.Add("TotalEarnings", "Total Earnings");
 
             string query = @"
-       SELECT 
-    u.Username AS MerchantName,
-    u.Email,
-    s.ShopName,
-    s.ShopType,
-    COUNT(DISTINCT o.OrderID) AS OrderCount,
-    COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalEarnings
-FROM Users u
-JOIN Shops s ON u.UserID = s.MerchantID
-LEFT JOIN Products p ON s.MerchantID = p.MerchantID
-LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
-LEFT JOIN Orders o ON oi.OrderID = o.OrderID
-WHERE u.Role = 'Merchant'
-GROUP BY u.UserID, u.Username, u.Email, s.ShopName, s.ShopType
-ORDER BY TotalEarnings DESC;
-";
+            SELECT 
+            u.Username AS MerchantName,
+            u.Email,
+            s.ShopName,
+            s.ShopType,
+            COUNT(DISTINCT o.OrderID) AS OrderCount,
+            COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalEarnings
+            FROM Users u
+            JOIN Shops s ON u.UserID = s.MerchantID
+            LEFT JOIN Products p ON s.MerchantID = p.MerchantID
+            LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+            LEFT JOIN Orders o ON oi.OrderID = o.OrderID
+            WHERE u.Role = 'Merchant'
+            GROUP BY u.UserID, u.Username, u.Email, s.ShopName, s.ShopType
+            ORDER BY TotalEarnings DESC;";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {

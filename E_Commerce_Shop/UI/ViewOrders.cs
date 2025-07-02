@@ -60,7 +60,7 @@ namespace E_Commerce_Shop.UI.Merchant
             dataGridView1.Columns.Add("OrderDate", "Date");
 
             string query = @"
-        SELECT 
+            SELECT 
             p.Name AS ProductName,
             oi.Quantity,
             oi.Price AS UnitPrice,
@@ -68,13 +68,13 @@ namespace E_Commerce_Shop.UI.Merchant
             cu.Username AS CustomerName,
             cu.Email AS CustomerEmail,
             o.OrderDate
-        FROM OrderItems oi
-        JOIN Products p ON oi.ProductID = p.ProductID
-        JOIN Orders o ON oi.OrderID = o.OrderID
-        JOIN Users cu ON o.CustomerID = cu.UserID
-        WHERE p.MerchantID = @merchantId
-        ORDER BY o.OrderDate DESC;
-    ";
+            FROM OrderItems oi
+            JOIN Products p ON oi.ProductID = p.ProductID
+            JOIN Orders o ON oi.OrderID = o.OrderID
+            JOIN Users cu ON o.CustomerID = cu.UserID
+            WHERE p.MerchantID = @merchantId
+            ORDER BY o.OrderDate DESC;";
+                                        
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {

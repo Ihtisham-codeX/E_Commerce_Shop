@@ -151,7 +151,7 @@ namespace E_Commerce_Shop.UI
                             FROM Shops s
                             JOIN Shop_Categories sc ON s.ShopType = sc.CategoryName
                             JOIN Product_Categories pc ON pc.Shop_Category_ID = sc.ShopCategoryID
-                            WHERE s.MerchantID = '{id}';";
+                            WHERE s.MerchantID = '{id}' AND s.ShopID = pc.ShopID;";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {

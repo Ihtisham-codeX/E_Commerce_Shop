@@ -11,20 +11,23 @@ Create Table Shop_Categories(
 	ShopCategoryID INT auto_increment primary key,
     CategoryName VARCHAR(50) NOT NULL UNIQUE
 );
--- the following table is for the sub categories for the products that lye in each shop
-Create Table Product_Categories(
-	Product_Category_ID INT auto_increment primary key,
-    CategoryName VARCHAR(50) NOT NULL UNIQUE,
-    Shop_Category_ID INT NOT NULL,
-     FOREIGN KEY (Shop_Category_ID) REFERENCES Shop_Categories(ShopCategoryID)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
 Create Table Shops(
 	ShopID INT auto_increment primary key,
     ShopName VARCHAR(50) NOT NULL UNIQUE,
     MerchantID INT NOT NULL,
     ShopType VARCHAR(50) NOT NULL ,
      FOREIGN KEY (MerchantID) REFERENCES Users(UserID)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+-- the following table is for the sub categories for the products that lye in each shop
+Create Table Product_Categories(
+	Product_Category_ID INT auto_increment primary key,
+    CategoryName VARCHAR(50) NOT NULL UNIQUE,
+    Shop_Category_ID INT NOT NULL,
+    ShopID INT NOT NULL,
+     FOREIGN KEY (Shop_Category_ID) REFERENCES Shop_Categories(ShopCategoryID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	 FOREIGN KEY (ShopID) REFERENCES Shops(ShopID)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE Products (

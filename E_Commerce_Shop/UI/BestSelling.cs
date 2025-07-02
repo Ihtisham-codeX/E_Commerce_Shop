@@ -59,18 +59,18 @@ namespace E_Commerce_Shop.UI.Merchant
             dataGridView1.Columns.Add("TotalSold", "Total Sold");
 
             string query = @"
-       SELECT 
-       u.Username AS MerchantName,
-       s.ShopName,
-       p.Name AS ProductName,
-       SUM(oi.Quantity) AS TotalSold
-       FROM OrderItems oi
-      JOIN Products p ON oi.ProductID = p.ProductID
-      JOIN Shops s ON p.MerchantID = s.MerchantID
-      JOIN Users u ON p.MerchantID = u.UserID
-      WHERE u.UserID = @merchantId
-      GROUP BY p.ProductID, u.Username, s.ShopName, p.Name
-      ORDER BY TotalSold DESC;";
+                SELECT 
+                u.Username AS MerchantName,
+                s.ShopName,
+                p.Name AS ProductName,
+                SUM(oi.Quantity) AS TotalSold
+                FROM OrderItems oi
+                JOIN Products p ON oi.ProductID = p.ProductID
+                JOIN Shops s ON p.MerchantID = s.MerchantID
+                JOIN Users u ON p.MerchantID = u.UserID
+                WHERE u.UserID = @merchantId
+                GROUP BY p.ProductID, u.Username, s.ShopName, p.Name
+                ORDER BY TotalSold DESC;";
 
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())

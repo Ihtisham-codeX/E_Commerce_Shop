@@ -51,13 +51,14 @@ namespace E_Commerce_Shop.UI
 
         private void button10_Click(object sender, EventArgs e)
         {
-            string type = textBox1.Text.Trim(); 
-            string q = $@"INSERT INTO product_categories(CategoryName, Shop_Category_ID)
-              VALUES ('{type}', {ShopCategoryID()})";
+            int shopID = GetShopIdByMerchantId();
+            string type = textBox1.Text.Trim();
+            string q = $@"INSERT INTO product_categories(CategoryName, Shop_Category_ID , ShopID)
+              VALUES ('{type}', {ShopCategoryID()}  , '{shopID}')";
 
             try
             {
-                int rowsAffected = DatabaseHelper.Instance.Update(q); 
+                int rowsAffected = DatabaseHelper.Instance.Update(q);
 
                 if (rowsAffected > 0)
                 {
@@ -78,6 +79,25 @@ namespace E_Commerce_Shop.UI
 
 
         }
+        public int GetShopIdByMerchantId()
+        {
+            int merchantId = User.GetUserId(user.GetPassword(), user.GetUsername());
+            using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
+            {
+                string query = "SELECT ShopID FROM Shops WHERE MerchantID = @merchantId";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@merchantId", merchantId);
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                }
+            }
+            return -1; // or throw exception / return 0 if not found
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -111,13 +131,13 @@ namespace E_Commerce_Shop.UI
             dataGridView1.Columns.Add("ProductType", "Product Type");
 
             string query = $@"
-                            SELECT DISTINCT pc.CategoryName AS ProductType
-                            FROM product_categories pc
-                            JOIN shop_categories sc
-                            ON sc.ShopCategoryID = pc.Shop_Category_ID
-                            JOIN shops s
-                            ON s.ShopType = sc.CategoryName
-                            where s.MerchantID = '{merchantId}'";
+                            Select pc.CategoryName AS ProductType
+                            FROM shop_categories sc
+                            JOIN shops s ON s.ShopType = sc.CategoryName
+                            JOIN product_categories pc ON pc.Shop_Category_ID = sc.ShopCategoryID
+                            Where s.MerchantID = '{merchantId}' AND s.ShopID = pc.ShopID;"
+
+;
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
@@ -135,6 +155,9 @@ namespace E_Commerce_Shop.UI
             }
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
