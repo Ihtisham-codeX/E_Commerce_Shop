@@ -40,7 +40,7 @@ namespace E_Commerce_Shop.UI.Customer
 
                     MySqlCommand cmd = new MySqlCommand("ConfirmPurchase", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@in_CustomerID", customerId);
+                    cmd.Parameters.AddWithValue("@in_Cust", customerId);
                     cmd.ExecuteNonQuery();
                 }
 
@@ -64,7 +64,7 @@ namespace E_Commerce_Shop.UI.Customer
                 {
                     // Step 1: Get CartID for the user
                     int cartId = -1;
-                    using (var cmd = new MySqlCommand("SELECT CartID FROM Carts WHERE CustomerID = @CustomerID", conn))
+                    using (var cmd = new MySqlCommand("SELECT CartID FROM carts WHERE CustomerID = @CustomerID", conn))
                     {
                         cmd.Parameters.AddWithValue("@CustomerID", customerId);
                         object cartResult = cmd.ExecuteScalar();
@@ -77,8 +77,8 @@ namespace E_Commerce_Shop.UI.Customer
                     // Step 2: Calculate Total
                     using (var cmd = new MySqlCommand(@"
                 SELECT SUM(ci.Quantity * p.Price)
-                FROM CartItems ci
-                JOIN Products p ON ci.ProductID = p.ProductID
+                FROM cartitems ci
+                JOIN products p ON ci.ProductID = p.ProductID
                 WHERE ci.CartID = @CartID", conn))
                     {
                         cmd.Parameters.AddWithValue("@CartID", cartId);

@@ -116,7 +116,7 @@ namespace E_Commerce_Shop.UI
                              MerchantID,
                              SUM(Quantity) AS TotalQuantityInStock
                              FROM 
-                             Products
+                             products
                              WHERE 
                              MerchantID = '{merchantId}'
                              GROUP BY 
@@ -136,8 +136,8 @@ namespace E_Commerce_Shop.UI
         private int GetTotalOrdersByMerchant(int merchantId)
         {
             string query = $@"SELECT COUNT(DISTINCT oi.OrderID) AS TotalOrdersForMerchant
-                            FROM OrderItems oi
-                            JOIN Products p ON oi.ProductID = p.ProductID
+                            FROM orderitems oi
+                            JOIN products p ON oi.ProductID = p.ProductID
                             WHERE p.MerchantID = '{merchantId}';";
 
             using (var reader = DatabaseHelper.Instance.getData(query))
@@ -157,9 +157,9 @@ namespace E_Commerce_Shop.UI
                             p.MerchantID,
                             SUM(oi.Price * oi.Quantity) AS TotalEarnings
                             FROM 
-                            OrderItems oi
+                            orderitems oi
                             JOIN 
-                            Products p ON oi.ProductID = p.ProductID
+                            products p ON oi.ProductID = p.ProductID
                             WHERE 
                             p.MerchantID = '{merchantId}'
                             GROUP BY 
@@ -181,7 +181,7 @@ namespace E_Commerce_Shop.UI
             string query = $@"SELECT 
                             ShopName
                             FROM 
-                            Shops
+                            shops
                             WHERE 
                             MerchantID = '{merchantId}'";
 

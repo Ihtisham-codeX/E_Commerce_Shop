@@ -84,7 +84,7 @@ namespace E_Commerce_Shop.UI
             int merchantId = User.GetUserId(user.GetPassword(), user.GetUsername());
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
-                string query = "SELECT ShopID FROM Shops WHERE MerchantID = @merchantId";
+                string query = "SELECT ShopID FROM shops WHERE MerchantID = @merchantId";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@merchantId", merchantId);
@@ -106,8 +106,8 @@ namespace E_Commerce_Shop.UI
         {
             int id = User.GetUserId(user.GetPassword(), user.GetUsername());
             string query = $@"SELECT sc.ShopCategoryID
-                            FROM Shops s
-                            JOIN Shop_Categories sc ON s.ShopType = sc.CategoryName
+                            FROM shops s
+                            JOIN shop_categories sc ON s.ShopType = sc.CategoryName
                             WHERE s.MerchantID = '{id}';";
             using (var reader = DatabaseHelper.Instance.getData(query))
             {
@@ -134,7 +134,7 @@ namespace E_Commerce_Shop.UI
                             Select pc.CategoryName AS ProductType
                             FROM shop_categories sc
                             JOIN shops s ON s.ShopType = sc.CategoryName
-                            JOIN product_categories pc ON pc.Shop_Category_ID = sc.ShopCategoryID
+                            JOIN product_categories pc ON pc.shop_category_ID = sc.ShopCategoryID
                             Where s.MerchantID = '{merchantId}' AND s.ShopID = pc.ShopID;"
 
 ;

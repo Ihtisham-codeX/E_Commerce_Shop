@@ -64,10 +64,10 @@ namespace E_Commerce_Shop.UI.Merchant
                 s.ShopName,
                 p.Name AS ProductName,
                 SUM(oi.Quantity) AS TotalSold
-                FROM OrderItems oi
-                JOIN Products p ON oi.ProductID = p.ProductID
-                JOIN Shops s ON p.MerchantID = s.MerchantID
-                JOIN Users u ON p.MerchantID = u.UserID
+                FROM orderitems oi
+                JOIN products p ON oi.ProductID = p.ProductID
+                JOIN shops s ON p.MerchantID = s.MerchantID
+                JOIN users u ON p.MerchantID = u.UserID
                 WHERE u.UserID = @merchantId
                 GROUP BY p.ProductID, u.Username, s.ShopName, p.Name
                 ORDER BY TotalSold DESC;";

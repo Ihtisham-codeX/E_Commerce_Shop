@@ -46,9 +46,9 @@ namespace E_Commerce_Shop.UI.Admin
             p.Name AS ProductName,
             s.ShopName,
             SUM(oi.Quantity) AS TimesSold
-            FROM OrderItems oi
-            JOIN Products p ON oi.ProductID = p.ProductID
-            JOIN Shops s ON p.MerchantID = s.MerchantID
+            FROM orderitems oi
+            JOIN products p ON oi.ProductID = p.ProductID
+            JOIN shops s ON p.MerchantID = s.MerchantID
             GROUP BY p.ProductID, p.Name, s.ShopName
             ORDER BY TimesSold DESC;";
 

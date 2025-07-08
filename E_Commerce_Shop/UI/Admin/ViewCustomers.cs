@@ -48,9 +48,9 @@ namespace E_Commerce_Shop.UI.Admin
                 u.Email,
                 COUNT(DISTINCT o.OrderID) AS SalesMade,
                 COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalSpent
-                FROM Users u
-                LEFT JOIN Orders o ON u.UserID = o.CustomerID
-                LEFT JOIN OrderItems oi ON o.OrderID = oi.OrderID
+                FROM users u
+                LEFT JOIN orders o ON u.UserID = o.CustomerID
+                LEFT JOIN orderitems oi ON o.OrderID = oi.OrderID
                 WHERE u.Role = 'Customer'
                 GROUP BY u.UserID, u.Username, u.Email
                 ORDER BY TotalSpent DESC;

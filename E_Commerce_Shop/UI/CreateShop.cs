@@ -70,7 +70,7 @@ namespace E_Commerce_Shop.UI.Merchant
         }
         private void LoadShopTypes()
         {
-            string query = @"SELECT CategoryName FROM ecommercestore.shop_categories;";
+            string query = @"SELECT CategoryName FROM shop_categories;";
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))

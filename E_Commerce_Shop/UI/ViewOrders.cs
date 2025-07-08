@@ -68,10 +68,10 @@ namespace E_Commerce_Shop.UI.Merchant
             cu.Username AS CustomerName,
             cu.Email AS CustomerEmail,
             o.OrderDate
-            FROM OrderItems oi
-            JOIN Products p ON oi.ProductID = p.ProductID
-            JOIN Orders o ON oi.OrderID = o.OrderID
-            JOIN Users cu ON o.CustomerID = cu.UserID
+            FROM orderitems oi
+            JOIN products p ON oi.ProductID = p.ProductID
+            JOIN orders o ON oi.OrderID = o.OrderID
+            JOIN users cu ON o.CustomerID = cu.UserID
             WHERE p.MerchantID = @merchantId
             ORDER BY o.OrderDate DESC;";
                                         

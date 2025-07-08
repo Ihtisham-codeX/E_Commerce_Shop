@@ -64,8 +64,8 @@ namespace E_Commerce_Shop.UI.Customer
 
             string query = @"
                 SELECT p.ProductID, p.Name, p.ImagePath, p.Price, p.Quantity, s.ShopName
-                FROM Products p
-                JOIN Shops s ON p.MerchantID = s.MerchantID";
+                FROM products p
+                JOIN shops s ON p.MerchantID = s.MerchantID";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
@@ -128,14 +128,14 @@ namespace E_Commerce_Shop.UI.Customer
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
                 // Ensure cart exists
-                MySqlCommand getCartCmd = new MySqlCommand("SELECT CartID FROM Carts WHERE CustomerID = @id", conn);
+                MySqlCommand getCartCmd = new MySqlCommand("SELECT CartID FROM carts WHERE CustomerID = @id", conn);
                 getCartCmd.Parameters.AddWithValue("@id", customerId);
                 object result = getCartCmd.ExecuteScalar();
 
                 int cartId;
                 if (result == null)
                 {
-                    MySqlCommand createCartCmd = new MySqlCommand("INSERT INTO Carts(CustomerID) VALUES (@id)", conn);
+                    MySqlCommand createCartCmd = new MySqlCommand("INSERT INTO carts(CustomerID) VALUES (@id)", conn);
                     createCartCmd.Parameters.AddWithValue("@id", customerId);
                     createCartCmd.ExecuteNonQuery();
                     cartId = (int)createCartCmd.LastInsertedId;
@@ -147,7 +147,7 @@ namespace E_Commerce_Shop.UI.Customer
 
                 // Add to cart or update quantity
                 MySqlCommand addItem = new MySqlCommand(@"
-                    INSERT INTO CartItems (CartID, ProductID, Quantity)
+                    INSERT INTO cartitems (CartID, ProductID, Quantity)
                     VALUES (@cartId, @productId, 1)
                     ON DUPLICATE KEY UPDATE Quantity = Quantity + 1", conn);
                 addItem.Parameters.AddWithValue("@cartId", cartId);

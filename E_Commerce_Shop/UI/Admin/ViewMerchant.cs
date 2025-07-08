@@ -52,11 +52,11 @@ namespace E_Commerce_Shop.UI.Admin
             s.ShopType,
             COUNT(DISTINCT o.OrderID) AS OrderCount,
             COALESCE(SUM(oi.Price * oi.Quantity), 0) AS TotalEarnings
-            FROM Users u
-            JOIN Shops s ON u.UserID = s.MerchantID
-            LEFT JOIN Products p ON s.MerchantID = p.MerchantID
-            LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
-            LEFT JOIN Orders o ON oi.OrderID = o.OrderID
+            FROM users u
+            JOIN shops s ON u.UserID = s.MerchantID
+            LEFT JOIN products p ON s.MerchantID = p.MerchantID
+            LEFT JOIN orderitems oi ON p.ProductID = oi.ProductID
+            LEFT JOIN orders o ON oi.OrderID = o.OrderID
             WHERE u.Role = 'Merchant'
             GROUP BY u.UserID, u.Username, u.Email, s.ShopName, s.ShopType
             ORDER BY TotalEarnings DESC;";

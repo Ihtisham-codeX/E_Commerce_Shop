@@ -148,9 +148,9 @@ namespace E_Commerce_Shop.UI
         {
             int id = User.GetUserId(user.GetPassword(), user.GetUsername());
             string query = $@"SELECT pc.CategoryName
-                            FROM Shops s
-                            JOIN Shop_Categories sc ON s.ShopType = sc.CategoryName
-                            JOIN Product_Categories pc ON pc.Shop_Category_ID = sc.ShopCategoryID
+                            FROM shops s
+                            JOIN shop_categories sc ON s.ShopType = sc.CategoryName
+                            JOIN product_categories pc ON pc.Shop_Category_ID = sc.ShopCategoryID
                             WHERE s.MerchantID = '{id}' AND s.ShopID = pc.ShopID;";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())

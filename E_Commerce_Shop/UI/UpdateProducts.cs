@@ -89,11 +89,11 @@ namespace E_Commerce_Shop.UI.Merchant
                 
             // Load Data
             int id = User.GetUserId(user.GetPassword(), user.GetUsername());
-            string query = @$"SELECT ProductID, Name, ImagePath, Price, Quantity FROM Products Where MerchantID = '{id}'";
+            string query = @$"SELECT ProductID, Name, ImagePath, Price, Quantity FROM products Where MerchantID = '{id}'";
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
+                
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -122,7 +122,8 @@ namespace E_Commerce_Shop.UI.Merchant
                     }
                 }
             }
-        }
+
+        
         private void dgvUpdateProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // Check if "Delete" column clicked
@@ -133,7 +134,7 @@ namespace E_Commerce_Shop.UI.Merchant
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this product?", "Confirm Delete", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    string deleteQuery = $"DELETE FROM Products WHERE ProductID = {productId}";
+                    string deleteQuery = $"DELETE FROM products WHERE ProductID = {productId}";
 
                     try
                     {

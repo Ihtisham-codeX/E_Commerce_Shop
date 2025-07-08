@@ -62,10 +62,10 @@ namespace E_Commerce_Shop.UI.Customer
 
             string query = @"
                 SELECT p.ProductID, p.Name AS ProductName, p.ImagePath, s.ShopName, p.Price, SUM(ci.Quantity) AS Quantity
-                FROM CartItems ci
-                JOIN Carts c ON ci.CartID = c.CartID
-                JOIN Products p ON ci.ProductID = p.ProductID
-                JOIN Shops s ON p.MerchantID = s.MerchantID
+                FROM cartitems ci
+                JOIN carts c ON ci.CartID = c.CartID
+                JOIN products p ON ci.ProductID = p.ProductID
+                JOIN shops s ON p.MerchantID = s.MerchantID
                 WHERE c.CustomerID = @id
                 GROUP BY p.ProductID, p.Name, p.ImagePath, s.ShopName, p.Price";
 
@@ -128,7 +128,7 @@ namespace E_Commerce_Shop.UI.Customer
                     int customerId = User.GetUserId(user.GetPassword(), user.GetUsername());
 
                     // Get Cart ID
-                    string cartQuery = "SELECT CartID FROM Carts WHERE CustomerID = @custId";
+                    string cartQuery = "SELECT CartID FROM carts WHERE CustomerID = @custId";
                     MySqlCommand cartCmd = new MySqlCommand(cartQuery, conn);
                     cartCmd.Parameters.AddWithValue("@custId", customerId);
                     object result = cartCmd.ExecuteScalar();
@@ -139,11 +139,11 @@ namespace E_Commerce_Shop.UI.Customer
                     }
                     int cartId = Convert.ToInt32(result);
                     string query = @"
-                UPDATE CartItems 
+                UPDATE cartitems 
                 SET Quantity = Quantity - 1 
                 WHERE CartID = @cartId AND ProductID = @productId;
 
-                DELETE FROM CartItems 
+                DELETE FROM cartitems 
                 WHERE CartID = @cartId AND ProductID = @productId AND Quantity <= 0;
             ";
 
