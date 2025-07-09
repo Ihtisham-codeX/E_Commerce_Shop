@@ -45,7 +45,9 @@ namespace E_Commerce_Shop.UI.Customer
                 }
 
                 MessageBox.Show("Purchase confirmed and cart cleared!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();  // Or redirect to another form
+                this.Close(); // Or redirect to another form
+                Customerdashboard dashboard = new Customerdashboard(user);
+                dashboard.Show();
             }
             catch (Exception ex)
             {

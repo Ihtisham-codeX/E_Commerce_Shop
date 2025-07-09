@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using E_Commerce_Shop.BL;
 using E_Commerce_Shop.DL;
 using MySql.Data.MySqlClient;
+using System.Net; // Required for WebClient
+
 
 namespace E_Commerce_Shop.UI
 {
@@ -47,7 +49,7 @@ namespace E_Commerce_Shop.UI
         private void LoadProducts()
         {
             int id = User.GetUserId(user.GetPassword(), user.GetUsername());
-            string query = @$"SELECT Name, ImagePath, Price, Quantity FROM products Where MerchantID = '{id}'";
+            string query = @$"SELECT Name, ImagePath, Price, Quantity FROM products WHERE MerchantID = '{id}'";
 
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
@@ -55,53 +57,47 @@ namespace E_Commerce_Shop.UI
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        //Clear existing rows and columns
                         dataGridView1.Rows.Clear();
                         dataGridView1.Columns.Clear();
 
-                        dataGridView1.AutoGenerateColumns = false; // Do not auto-generate columns
-                        dataGridView1.RowTemplate.Height = 170; // Set row height for images
-                        dataGridView1.AllowUserToAddRows = false; // Disable adding new rows by user
-                        dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Set columns to fill the grid width
+                        dataGridView1.AutoGenerateColumns = false;
+                        dataGridView1.RowTemplate.Height = 170;
+                        dataGridView1.AllowUserToAddRows = false;
+                        dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                        // Add the coulumns
+                        // Add columns
                         dataGridView1.Columns.Add("Name", "Name");
 
-                        DataGridViewImageColumn imgCol = new DataGridViewImageColumn // Image column
+                        var imgCol = new DataGridViewImageColumn
                         {
                             Name = "Image",
                             HeaderText = "Image",
-                            ImageLayout = DataGridViewImageCellLayout.Stretch
+                            ImageLayout = DataGridViewImageCellLayout.Zoom
                         };
                         dataGridView1.Columns.Add(imgCol);
 
                         dataGridView1.Columns.Add("Price", "Price");
                         dataGridView1.Columns.Add("Quantity", "Quantity");
 
-                        // Load rows
                         while (reader.Read())
                         {
                             string name = reader["Name"].ToString();
-                            string imagePath = reader["ImagePath"].ToString();
+                            string imageUrl = reader["ImagePath"].ToString();
                             string price = reader["Price"].ToString();
                             string quantity = reader["Quantity"].ToString();
 
-                            Image img = new Bitmap(100, 100); // Create a blank image of 100x100 pixels
+                            Image img = new Bitmap(1, 1); // fallback image
                             try
                             {
-                                if (File.Exists(imagePath))
+                                using (var wc = new System.Net.WebClient())
+                                using (var stream = wc.OpenRead(imageUrl))
                                 {
-                                    // Load the image from the file stream and clone it to avoid locking the file
-                                    // This allows the file to be deleted or modified later if needed
-                                    using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read)) 
-                                    {
-                                        img = Image.FromStream(fs).Clone() as Image;
-                                    }
+                                    img = Image.FromStream(stream);
                                 }
                             }
                             catch
                             {
-                                // fallback image already assigned
+                                // If image fails to load, blank image remains
                             }
 
                             dataGridView1.Rows.Add(name, img, price, quantity);

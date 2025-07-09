@@ -26,6 +26,7 @@ namespace E_Commerce_Shop.UI
         private void AddProducts_Load(object sender, EventArgs e)
         {
             LoadProductTypes();
+
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -92,7 +93,9 @@ namespace E_Commerce_Shop.UI
             string description = textBox2.Text;
             string ProductType = comboBox1.SelectedItem.ToString();
             int quantity = int.Parse(textBox3.Text);
-            string imagePath = textBox4.Text;
+
+            string localImagePath = textBox4.Text;
+            string imageUrl = CloudinaryHelper.UploadImage(localImagePath);
 
             int MerchantID = User.GetUserId(user.GetPassword(), user.GetUsername());
             int CategoryId = CategoryID(ProductType);
@@ -107,7 +110,7 @@ namespace E_Commerce_Shop.UI
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
-                    cmd.Parameters.AddWithValue("@imagePath", imagePath);
+                    cmd.Parameters.AddWithValue("@imagePath", imageUrl);
                     cmd.Parameters.AddWithValue("@categoryId", CategoryId);
                     cmd.Parameters.AddWithValue("@merchantId", MerchantID);
                     int rowsAffected = cmd.ExecuteNonQuery();

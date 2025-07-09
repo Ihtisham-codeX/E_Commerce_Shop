@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 using E_Commerce_Shop.BL;
 using E_Commerce_Shop.DL;
 using MySql.Data.MySqlClient;
@@ -88,18 +89,21 @@ namespace E_Commerce_Shop.UI.Customer
                             int quantity = Convert.ToInt32(reader["Quantity"]);
                             decimal total = price * quantity;
 
-                            Image img = new Bitmap(100, 100);
+                            Image img = new Bitmap(1, 1); // fallback blank image
                             try
                             {
-                                if (File.Exists(imagePath))
+                                using (var wc = new System.Net.WebClient())
+                                using (var stream = wc.OpenRead(imagePath))
                                 {
-                                    using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                                    {
-                                        img = Image.FromStream(fs);
-                                    }
+                                    img = Image.FromStream(stream);
                                 }
                             }
-                            catch { }
+                            catch
+                            {
+                                // Optional: Load fallback image from resources if needed
+                                // img = Properties.Resources.DefaultImage;
+                            }
+
 
                             dataGridView4.Rows.Add(productId, productName, img, shopName, price.ToString("C"), quantity, total.ToString("C"));
                         }
