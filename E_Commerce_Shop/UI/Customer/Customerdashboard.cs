@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using E_Commerce_Shop.BL;
+using E_Commerce_Shop.DL;
+using MySql.Data.MySqlClient;
 
 namespace E_Commerce_Shop.UI.Customer
 {
@@ -39,6 +41,10 @@ namespace E_Commerce_Shop.UI.Customer
             Color myColor = Color.FromArgb(192, 255, 192);
             button1.FlatAppearance.BorderColor = myColor;
             button2.FlatAppearance.BorderColor = myColor;
+            int id = User.GetUserId(user.GetPassword(), user.GetUsername());
+            int a = GetPurchaseCountByCustomer(id);
+            textBox2.Text = a.ToString();
+            textBox1.Text = user.GetUsername();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -65,6 +71,41 @@ namespace E_Commerce_Shop.UI.Customer
             this.Hide();
             HomePage homePage = new HomePage();
             homePage.Show();
+        }
+        public int GetPurchaseCountByCustomer(int customerId)
+        {
+            string query = $"SELECT COUNT(*) FROM orders WHERE CustomerID = {customerId}";
+
+            using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    try
+                    {
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            return count;
+                        }
+                        return 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error getting purchase count: " + ex.Message);
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

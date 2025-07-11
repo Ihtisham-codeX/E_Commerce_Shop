@@ -38,12 +38,14 @@
             // 
             // panel1
             // 
+            panel1.BackColor = SystemColors.ButtonFace;
             panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
-            panel1.BackgroundImageLayout = ImageLayout.Stretch;
+            panel1.BackgroundImageLayout = ImageLayout.Center;
             panel1.Location = new Point(686, -2);
             panel1.Name = "panel1";
             panel1.Size = new Size(602, 794);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // panel2
             // 

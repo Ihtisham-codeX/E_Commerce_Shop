@@ -126,6 +126,7 @@
             textBox1.TabIndex = 6;
             textBox1.Text = "customer";
             textBox1.TextAlign = HorizontalAlignment.Center;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
             // 
@@ -138,6 +139,7 @@
             textBox2.TabIndex = 7;
             textBox2.Text = "00";
             textBox2.TextAlign = HorizontalAlignment.Center;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label2
             // 

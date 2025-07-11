@@ -50,5 +50,10 @@ namespace E_Commerce_Shop.UI
             Signup signupPage = new Signup();
             signupPage.ShowDialog();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

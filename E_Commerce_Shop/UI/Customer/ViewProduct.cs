@@ -120,7 +120,6 @@ namespace E_Commerce_Shop.UI.Customer
                     return;
                 }
 
-                
                 int id = User.GetUserId(user.GetPassword(), user.GetUsername());
                 AddToCart(id, productId);
             }
@@ -130,6 +129,17 @@ namespace E_Commerce_Shop.UI.Customer
         {
             using (MySqlConnection conn = DatabaseHelper.Instance.getConnection())
             {
+                // Check product stock first
+                MySqlCommand checkStockCmd = new MySqlCommand("SELECT Quantity FROM products WHERE ProductID = @productId", conn);
+                checkStockCmd.Parameters.AddWithValue("@productId", productId);
+                object stockResult = checkStockCmd.ExecuteScalar();
+
+                if (stockResult == null || Convert.ToInt32(stockResult) <= 0)
+                {
+                    MessageBox.Show("This product is out of stock.");
+                    return;
+                }
+
                 // Ensure cart exists
                 MySqlCommand getCartCmd = new MySqlCommand("SELECT CartID FROM carts WHERE CustomerID = @id", conn);
                 getCartCmd.Parameters.AddWithValue("@id", customerId);
@@ -150,15 +160,24 @@ namespace E_Commerce_Shop.UI.Customer
 
                 // Add to cart or update quantity
                 MySqlCommand addItem = new MySqlCommand(@"
-                    INSERT INTO cartitems (CartID, ProductID, Quantity)
-                    VALUES (@cartId, @productId, 1)
-                    ON DUPLICATE KEY UPDATE Quantity = Quantity + 1", conn);
+            INSERT INTO cartitems (CartID, ProductID, Quantity)
+            VALUES (@cartId, @productId, 1)
+            ON DUPLICATE KEY UPDATE Quantity = Quantity + 1", conn);
                 addItem.Parameters.AddWithValue("@cartId", cartId);
                 addItem.Parameters.AddWithValue("@productId", productId);
                 addItem.ExecuteNonQuery();
 
+                // Reduce stock in Products table
+                MySqlCommand reduceStock = new MySqlCommand("UPDATE products SET Quantity = Quantity - 1 WHERE ProductID = @productId", conn);
+                reduceStock.Parameters.AddWithValue("@productId", productId);
+                reduceStock.ExecuteNonQuery();
+
+                // Refresh product view
+                LoadProducts();
+
                 MessageBox.Show("Product added to cart!");
             }
         }
+
     }
 }
